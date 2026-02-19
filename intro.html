@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DirtView — Built for the Field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #1a2e1a;
+    --green-mid: #2d4a2d;
+    --green-accent: #3d6b3d;
+    --green-light: #4a7c4a;
+    --gold: #b8a04a;
+    --gold-light: #d4c06a;
+    --cream: #f5f2eb;
+    --cream-dark: #e8e3d8;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-light: #7a7a7a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: var(--cream);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    background: var(--green-dark);
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(61, 107, 61, 0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(184, 160, 74, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(184, 160, 74, 0.15);
+    border: 1px solid rgba(184, 160, 74, 0.3);
+    color: var(--gold-light);
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    animation: fadeDown 0.8s ease-out;
+  }
+
+  .hero-badge span {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 1.05;
+    max-width: 900px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease-out 0.15s both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: rgba(245, 242, 235, 0.7);
+    max-width: 600px;
+    line-height: 1.65;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease-out 0.3s both;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--green-dark);
+    padding: 16px 36px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+    animation: fadeUp 0.8s ease-out 0.45s both;
+  }
+  .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(184,160,74,0.3); }
+  .hero-cta svg { transition: transform 0.3s ease; }
+  .hero-cta:hover svg { transform: translateX(3px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(245,242,235,0.35);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* ---- SECTIONS ---- */
+  section { padding: 100px 24px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4.5vw, 48px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--green-dark);
+  }
+
+  .section-desc {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-mid);
+    max-width: 680px;
+  }
+
+  /* ---- PAIN POINTS ---- */
+  .pain-section { background: var(--white); }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    margin-top: 52px;
+  }
+
+  .pain-card {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 36px 32px;
+    border: 1px solid var(--cream-dark);
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .pain-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.06); }
+
+  .pain-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-accent), var(--gold));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .pain-card:hover::after { opacity: 1; }
+
+  .pain-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--green-dark);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    color: var(--gold-light);
+    font-size: 22px;
+  }
+
+  .pain-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--green-dark);
+  }
+
+  .pain-card p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-mid);
+  }
+
+  /* ---- SOLUTION ---- */
+  .solution-section { background: var(--cream); }
+
+  .solution-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-top: 52px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) { .solution-grid { grid-template-columns: 1fr; } }
+
+  .solution-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+
+  .solution-num {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--green-dark);
+    color: var(--gold-light);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 16px;
+  }
+
+  .solution-item h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 6px;
+  }
+
+  .solution-item p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-mid);
+  }
+
+  .solution-highlight {
+    background: var(--green-dark);
+    border-radius: 16px;
+    padding: 44px 36px;
+    color: var(--cream);
+    position: sticky;
+    top: 40px;
+  }
+
+  .solution-highlight h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--gold-light);
+  }
+
+  .solution-highlight p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(245,242,235,0.75);
+    margin-bottom: 16px;
+  }
+
+  .highlight-list {
+    list-style: none;
+    margin-top: 24px;
+  }
+
+  .highlight-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: rgba(245,242,235,0.85);
+    line-height: 1.5;
+  }
+
+  .highlight-list li::before {
+    content: '✓';
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: rgba(184,160,74,0.2);
+    color: var(--gold-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* ---- MODULES ---- */
+  .modules-section {
+    background: var(--green-dark);
+    color: var(--cream);
+  }
+
+  .modules-section .section-label { color: var(--gold-light); }
+  .modules-section .section-title { color: var(--cream); }
+  .modules-section .section-desc { color: rgba(245,242,235,0.65); }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 52px;
+  }
+
+  .module-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 32px 26px;
+    transition: all 0.35s ease;
+    cursor: default;
+  }
+  .module-card:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(184,160,74,0.3);
+    transform: translateY(-3px);
+  }
+
+  .module-card .icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .module-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--cream);
+  }
+
+  .module-card p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(245,242,235,0.55);
+  }
+
+  .module-card .tag {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    background: rgba(184,160,74,0.15);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  /* ---- PRICING / VALUE ---- */
+  .value-section { background: var(--white); }
+
+  .value-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 52px;
+    align-items: stretch;
+  }
+
+  @media (max-width: 768px) { .value-comparison { grid-template-columns: 1fr; } }
+
+  .value-card {
+    border-radius: 16px;
+    padding: 44px 36px;
+    position: relative;
+  }
+
+  .value-card.competitors {
+    background: var(--cream);
+    border: 1px solid var(--cream-dark);
+  }
+
+  .value-card.dirtview {
+    background: var(--green-dark);
+    color: var(--cream);
+    border: 2px solid var(--gold);
+  }
+
+  .value-card .card-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .value-card.competitors .card-label { color: var(--text-light); }
+  .value-card.dirtview .card-label { color: var(--gold-light); }
+
+  .value-card .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+
+  .value-card.dirtview .price { color: var(--gold-light); }
+
+  .value-card .price-note {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  .value-card.competitors .price-note { color: var(--text-light); }
+  .value-card.dirtview .price-note { color: rgba(245,242,235,0.6); }
+
+  .value-features {
+    list-style: none;
+  }
+
+  .value-features li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .value-card.dirtview .value-features li { border-color: rgba(255,255,255,0.08); }
+
+  .value-features .check { color: var(--green-accent); font-weight: 700; }
+  .value-features .cross { color: #c0392b; font-weight: 700; }
+  .value-card.dirtview .value-features .check { color: var(--gold-light); }
+
+  .value-card.dirtview::before {
+    content: 'RECOMMENDED';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--green-dark);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 18px;
+    border-radius: 100px;
+  }
+
+  /* ---- AI ---- */
+  .ai-section { background: var(--cream); }
+
+  .ai-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .ai-card {
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-radius: 14px;
+    padding: 32px 28px;
+    transition: all 0.3s ease;
+  }
+  .ai-card:hover { border-color: var(--green-accent); }
+
+  .ai-card .icon { font-size: 24px; margin-bottom: 14px; display: block; }
+  .ai-card h3 { font-size: 16px; font-weight: 700; color: var(--green-dark); margin-bottom: 8px; }
+  .ai-card p { font-size: 14px; line-height: 1.6; color: var(--text-mid); }
+
+  /* ---- CTA ---- */
+  .cta-section {
+    background: var(--green-dark);
+    color: var(--cream);
+    text-align: center;
+    padding: 100px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(184,160,74,0.12) 0%, transparent 70%);
+  }
+
+  .cta-section .section-title {
+    color: var(--cream);
+    max-width: 700px;
+    margin: 0 auto 20px;
+  }
+
+  .cta-section .section-desc {
+    color: rgba(245,242,235,0.65);
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--green-dark);
+    padding: 18px 42px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(184,160,74,0.3); }
+
+  .cta-contact {
+    margin-top: 28px;
+    font-size: 14px;
+    color: rgba(245,242,235,0.5);
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-contact a {
+    color: var(--gold-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(184,160,74,0.3);
+    transition: border-color 0.3s ease;
+  }
+  .cta-contact a:hover { border-color: var(--gold-light); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: #111;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 13px;
+  }
+  footer strong { color: rgba(255,255,255,0.65); }
+
+  /* ---- STAT BAR ---- */
+  .stat-bar {
+    background: var(--green-mid);
+    padding: 48px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: rgba(245,242,235,0.55);
+    letter-spacing: 0.5px;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.7; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 600px) {
+    section { padding: 72px 20px; }
+    .stat-bar { gap: 40px; padding: 36px 20px; }
+    .stat-num { font-size: 30px; }
+    .pain-grid { grid-template-columns: 1fr; }
+    .modules-grid { grid-template-columns: 1fr 1fr; }
+    .solution-highlight { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =================== HERO =================== -->
+<section class="hero">
+  <div class="hero-badge"><span></span> Built for Construction Teams</div>
+  <h1>Your Jobsite.<br>Your <em>Software.</em></h1>
+  <p class="hero-sub">DirtView is a modular, field-first construction platform custom-built for subcontractors and project managers — not bloated enterprise tools retrofitted for your workflow.</p>
+  <a href="#contact" class="hero-cta">
+    Let's Talk
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  </a>
+  <div class="hero-scroll">Scroll to explore ↓</div>
+</section>
+
+<!-- =================== STAT BAR =================== -->
+<div class="stat-bar">
+  <div class="stat-item">
+    <span class="stat-num">$177B</span>
+    <span class="stat-label">Lost annually to paperwork & rework</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">35%+</span>
+    <span class="stat-label">Of field time spent on documentation</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">83%</span>
+    <span class="stat-label">More cost-effective than competitors</span>
+  </div>
+</div>
+
+<!-- =================== PAIN POINTS =================== -->
+<section class="pain-section">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">The Problem</span>
+      <h2 class="section-title">Your team deserves better tools</h2>
+      <p class="section-desc">Construction management software was built for general contractors sitting in offices — not for the superintendents, foremen, and PMs actually running the job.</p>
+    </div>
+
+    <div class="pain-grid">
+      <div class="pain-card fade-in">
+        <div class="pain-icon">📋</div>
+        <h3>Paper Workflows Everywhere</h3>
+        <p>Daily logs, PTPs, T&M tickets filled out by hand, photographed, texted to PMs, then manually entered into spreadsheets. Hours lost every single day.</p>
+      </div>
+      <div class="pain-card fade-in">
+        <div class="pain-icon">💸</div>
+        <h3>Paying for Bloat You Don't Use</h3>
+        <p>Enterprise platforms charge $25K–$10M/year with hundreds of features designed for GCs. Subcontractors end up paying for complexity they never touch.</p>
+      </div>
+      <div class="pain-card fade-in">
+        <div class="pain-icon">🔗</div>
+        <h3>Fragmented & Disconnected</h3>
+        <p>Photos in one app, forms in another, drawings emailed as attachments. No single source of truth. Finding a specific T&M ticket means digging through stacks.</p>
+      </div>
+      <div class="pain-card fade-in">
+        <div class="pain-icon">📱</div>
+        <h3>Not Built for the Field</h3>
+        <p>Desktop-first interfaces crammed onto a phone screen. Slow load times, tiny buttons, no offline capability. The field is an afterthought.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SOLUTION =================== -->
+<section class="solution-section">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">The Solution</span>
+      <h2 class="section-title">A platform shaped around <em>your</em> operation</h2>
+      <p class="section-desc">DirtView starts with a powerful core — then we customize it to match exactly how your team works. No wasted features. No forced workflows.</p>
+    </div>
+
+    <div class="solution-grid">
+      <div>
+        <div class="solution-item fade-in">
+          <div class="solution-num">1</div>
+          <div>
+            <h3>Field-First Mobile Experience</h3>
+            <p>Every screen is designed for a foreman wearing gloves on a jobsite. Large touch targets, fast load times, camera-first workflows. Submit a daily log in under 2 minutes.</p>
+          </div>
+        </div>
+        <div class="solution-item fade-in">
+          <div class="solution-num">2</div>
+          <div>
+            <h3>Flexible Forms System</h3>
+            <p>Digitize any paper form your team uses — daily logs, PTPs, safety inspections, T&M tickets. Drag-and-drop builder with 20+ field types. No developer needed.</p>
+          </div>
+        </div>
+        <div class="solution-item fade-in">
+          <div class="solution-num">3</div>
+          <div>
+            <h3>Intelligent Drawing Management</h3>
+            <p>Upload drawing sets, auto-detect sheet names via OCR, and get tappable hyperlinked callouts. Pin RFIs directly to drawing locations. Annotation layer for async collaboration.</p>
+          </div>
+        </div>
+        <div class="solution-item fade-in">
+          <div class="solution-num">4</div>
+          <div>
+            <h3>RFIs, Submittals & Change Orders</h3>
+            <p>Structured workflows with multi-party routing, distribution groups, and branded PDF exports. Everything tracked, searchable, and linked to drawings.</p>
+          </div>
+        </div>
+        <div class="solution-item fade-in">
+          <div class="solution-num">5</div>
+          <div>
+            <h3>Your Brand, Your Subdomain</h3>
+            <p>Every tenant gets a branded experience — yourcompany.dirtview.com — with your logo, colors, and custom forms. It feels like <em>your</em> software.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="solution-highlight fade-in">
+        <h3>Fully Modular. Fully Yours.</h3>
+        <p>DirtView is not a one-size-fits-all platform. We work directly with your team to understand your workflows, then configure and build the exact solution you need.</p>
+        <p>Pick the modules you use. Skip the ones you don't. Need something custom? We'll build it.</p>
+        <ul class="highlight-list">
+          <li>Custom form templates matching your existing paperwork</li>
+          <li>Role-based access control tailored to your org structure</li>
+          <li>Module toggles — only pay for what you use</li>
+          <li>Procore migration in under 1 hour</li>
+          <li>Branded PDF exports for every document type</li>
+          <li>Employee certification tracking with automated alerts</li>
+          <li>Direct integration with your existing tools</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== MODULES =================== -->
+<section class="modules-section">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">Platform Modules</span>
+      <h2 class="section-title">Pick what you need. Leave the rest.</h2>
+      <p class="section-desc">Every module is independently toggleable per project. Start with what matters most, expand as your team grows.</p>
+    </div>
+
+    <div class="modules-grid">
+      <div class="module-card fade-in">
+        <span class="icon">📝</span>
+        <h3>Forms Engine</h3>
+        <p>Daily logs, PTPs, safety inspections, quality checklists — any paper form, digitized.</p>
+        <span class="tag">Core</span>
+      </div>
+      <div class="module-card fade-in">
+        <span class="icon">📐</span>
+        <h3>Drawings</h3>
+        <p>Upload, OCR auto-link callouts, annotate, measure, and version-manage all drawing sets.</p>
+        <span class="tag">Core</span>
+      </div>
+      <div class="module-card fade-in">
+        <span class="icon">📨</span>
+        <h3>RFIs & Submittals</h3>
+        <p>Multi-party routing, drawing-linked pins, branded PDF distribution, and full audit trails.</p>
+        <span class="tag">Core</span>
+      </div>
+      <div class="module-card fade-in">
+        <span class="icon">📸</span>
+        <h3>Photos & Docs</h3>
+        <p>Auto-tagged photos with GPS and timestamps. Project-level document management with version history.</p>
+        <span class="tag">Core</span>
+      </div>
+      <div class="module-card fade-in">
+        <span class="icon">👷</span>
+        <h3>Employee Mgmt</h3>
+        <p>Profiles, certifications, expiry alerts, project assignments, and activity tracking.</p>
+        <span class="tag">Core</span>
+      </div>
+      <div class="module-card fade-in">
+        <span class="icon">💰</span>
+        <h3>Change Orders & T&M</h3>
+        <p>Digital T&M tickets with signature capture. Change order tracking with automated summaries.</p>
+        <span class="tag">Add-on</span>
+      </div>
+      <div class="module-card fade-in">
+        <span class="icon">🤖</span>
+        <h3>AI Assistants</h3>
+        <p>Voice-to-form, smart RFI generation, automated narratives, and intelligent project search.</p>
+        <span class="tag">Add-on</span>
+      </div>
+      <div class="module-card fade-in">
+        <span class="icon">🔄</span>
+        <h3>Procore Migration</h3>
+        <p>One-click import of projects, users, RFIs, submittals, photos, and drawings from Procore.</p>
+        <span class="tag">Add-on</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== AI =================== -->
+<section class="ai-section">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">AI-Powered</span>
+      <h2 class="section-title">Intelligence woven into every workflow</h2>
+      <p class="section-desc">AI shouldn't be a buzzword. In DirtView, it's practical — reducing desk time and automating the tedious work that keeps your team from the field.</p>
+    </div>
+
+    <div class="ai-grid">
+      <div class="ai-card fade-in">
+        <span class="icon">🎙️</span>
+        <h3>Voice-Powered Forms</h3>
+        <p>Speak to fill out forms. Our voice assistant maps speech to form fields — including translation — so your crew can submit reports hands-free on site.</p>
+      </div>
+      <div class="ai-card fade-in">
+        <span class="icon">🔍</span>
+        <h3>Intelligent Search</h3>
+        <p>Search across all documents, forms, drawings, and photos using natural language. Find that specific T&M ticket in seconds, not minutes.</p>
+      </div>
+      <div class="ai-card fade-in">
+        <span class="icon">📄</span>
+        <h3>Auto-Generated Narratives</h3>
+        <p>Change order summaries, daily log recaps, and project reports drafted automatically from your submitted data. Review and send.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== VALUE =================== -->
+<section class="value-section">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">Pricing</span>
+      <h2 class="section-title">Better value. Better price.</h2>
+      <p class="section-desc">We built DirtView lean on purpose. No bloat means dramatically lower costs — with more of the features that actually matter to your field teams.</p>
+    </div>
+
+    <div class="value-comparison">
+      <div class="value-card competitors fade-in">
+        <div class="card-label">Typical Competitor</div>
+        <div class="price">$25K–$10M</div>
+        <div class="price-note">per year — locked contracts, per-user pricing</div>
+        <ul class="value-features">
+          <li><span class="cross">✗</span> Hundreds of unused features</li>
+          <li><span class="cross">✗</span> Desktop-first, clunky mobile</li>
+          <li><span class="cross">✗</span> Months-long onboarding</li>
+          <li><span class="cross">✗</span> Generic, one-size-fits-all</li>
+          <li><span class="cross">✗</span> Built for GCs, not subs</li>
+          <li><span class="check">✓</span> Established brand name</li>
+        </ul>
+      </div>
+
+      <div class="value-card dirtview fade-in">
+        <div class="card-label">DirtView</div>
+        <div class="price">$10K–$30K</div>
+        <div class="price-note">per year — flexible, scales with your revenue</div>
+        <ul class="value-features">
+          <li><span class="check">✓</span> Only the modules you need</li>
+          <li><span class="check">✓</span> Mobile-first, field-optimized</li>
+          <li><span class="check">✓</span> Branded demo in 24 hours</li>
+          <li><span class="check">✓</span> Fully custom to your workflows</li>
+          <li><span class="check">✓</span> Purpose-built for subcontractors</li>
+          <li><span class="check">✓</span> AI-powered automation</li>
+          <li><span class="check">✓</span> Lifetime support included</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== CTA =================== -->
+<section class="cta-section" id="contact">
+  <div class="container fade-in">
+    <span class="section-label" style="color: var(--gold-light);">Let's Build This Together</span>
+    <h2 class="section-title">Tell us what you need.<br>We'll build it.</h2>
+    <p class="section-desc">We'd love to sit down with your team, understand your workflows, and show you exactly how DirtView can be configured for your operation. No commitment — just a conversation.</p>
+    <a href="mailto:param@atritech.io" class="cta-btn">
+      Schedule a Meeting
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+    <p class="cta-contact">Or reach us directly at <a href="mailto:param@atritech.io">param@atritech.io</a></p>
+  </div>
+</section>
+
+<!-- =================== FOOTER =================== -->
+<footer>
+  <strong>DirtView</strong> by Atri Tech LLC · The Future of Construction Is Here
+</footer>
+
+<script>
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
