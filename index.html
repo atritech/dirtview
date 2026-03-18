@@ -567,6 +567,23 @@
   }
   footer strong { color: rgba(255,255,255,0.65); }
 
+  .footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold);
+    color: var(--green-dark);
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    margin-top: 16px;
+  }
+  .footer-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+
   /* ---- STAT BAR ---- */
   .stat-bar {
     background: var(--green-mid);
@@ -917,6 +934,11 @@
 <!-- =================== FOOTER =================== -->
 <footer>
   <strong>DirtView Inc</strong> · The Future of Construction Is Here
+  <br>
+  <a href="become_ambassador.html" class="footer-btn">
+    Become an Ambassador
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  </a>
 </footer>
 
 <script>

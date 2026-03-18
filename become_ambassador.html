@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DirtView Ambassador Program — Earn While You Build the Future</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a2e1a;
+    --green-dark: #243524;
+    --green-mid: #2d4a2d;
+    --green-rich: #3a5c3a;
+    --green-muted: #4a6b4a;
+    --tan: #c5a55a;
+    --tan-light: #d4b96e;
+    --tan-pale: #e0ca8a;
+    --tan-glow: rgba(197,165,90,0.25);
+    --tan-subtle: rgba(197,165,90,0.1);
+    --cream: #f2ede0;
+    --cream-bright: #faf7f0;
+    --text-primary: #f2ede0;
+    --text-secondary: #b8b0a0;
+    --text-muted: #8a8272;
+    --border: rgba(242,237,224,0.1);
+    --border-accent: rgba(197,165,90,0.3);
+    --bg-card: rgba(242,237,224,0.04);
+    --bg-card-hover: rgba(242,237,224,0.07);
+    --bg-glass: rgba(242,237,224,0.06);
+    --gradient-hero: linear-gradient(165deg, #1a2e1a 0%, #2a4528 30%, #1e351e 70%, #1a2e1a 100%);
+    --gradient-tan: linear-gradient(135deg, #c5a55a, #b3923e);
+    --gradient-card: linear-gradient(145deg, rgba(242,237,224,0.06), rgba(242,237,224,0.02));
+    --shadow-glow: 0 0 80px rgba(197,165,90,0.08);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--green-deep);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(26,46,26,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+    color: var(--cream);
+  }
+  .nav-logo span { color: var(--tan); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-cta {
+    background: var(--gradient-tan) !important;
+    color: var(--green-deep) !important;
+    padding: 0.55rem 1.4rem; border-radius: 8px;
+    font-weight: 700; font-size: 0.85rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 30px var(--tan-glow); }
+
+  section { position: relative; z-index: 1; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    background: var(--gradient-hero);
+    padding: 8rem 2rem 6rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute;
+    top: -200px; right: -200px; width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(197,165,90,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute;
+    bottom: -200px; left: -150px; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(58,92,58,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem; align-items: center;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--tan-subtle); border: 1px solid var(--border-accent);
+    border-radius: 100px; padding: 0.4rem 1.2rem;
+    font-size: 0.8rem; font-weight: 600; color: var(--tan);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 2rem; animation: fadeInUp 0.6s ease both;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--tan); border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 4.8vw, 3.8rem);
+    font-weight: 800; line-height: 1.12;
+    color: var(--cream-bright);
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease 0.1s both;
+  }
+  .hero h1 em { font-style: italic; color: var(--tan); }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--text-secondary);
+    line-height: 1.8; max-width: 540px; margin-bottom: 2.5rem;
+    animation: fadeInUp 0.6s ease 0.2s both;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeInUp 0.6s ease 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--gradient-tan); color: var(--green-deep);
+    padding: 0.9rem 2rem; border-radius: var(--radius-sm);
+    font-weight: 700; font-size: 1rem; text-decoration: none;
+    transition: all 0.25s ease; border: none; cursor: pointer;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px var(--tan-glow); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--bg-glass); color: var(--cream);
+    padding: 0.9rem 2rem; border-radius: var(--radius-sm);
+    font-weight: 500; font-size: 1rem; text-decoration: none;
+    border: 1px solid var(--border); transition: all 0.25s ease;
+  }
+  .btn-secondary:hover { background: var(--bg-card-hover); border-color: rgba(242,237,224,0.18); }
+
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    position: relative; z-index: 2;
+    animation: fadeInUp 0.8s ease 0.4s both;
+  }
+  .stat-card {
+    background: var(--gradient-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.8rem 1.5rem;
+    text-align: center; transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+  .stat-card:hover { border-color: var(--border-accent); transform: translateY(-3px); box-shadow: var(--shadow-glow); }
+  .stat-card:first-child {
+    grid-column: 1 / -1;
+    background: linear-gradient(145deg, rgba(197,165,90,0.1), rgba(197,165,90,0.03));
+    border-color: var(--border-accent);
+  }
+  .stat-number {
+    font-family: var(--font-display); font-size: 2.2rem; font-weight: 700;
+    color: var(--tan); line-height: 1.2;
+  }
+  .stat-card:first-child .stat-number { font-size: 2.8rem; }
+  .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.3rem; font-weight: 500; }
+
+  /* ── SECTION HEADINGS ── */
+  .section-label {
+    display: inline-block; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--tan); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 700; line-height: 1.2;
+    margin-bottom: 1.2rem; color: var(--cream-bright);
+  }
+  .section-sub { font-size: 1.1rem; color: var(--text-secondary); max-width: 640px; line-height: 1.8; }
+
+  /* ── WHO ── */
+  .who-section { padding: 7rem 2rem; background: var(--green-dark); border-top: 1px solid var(--border); }
+  .who-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .who-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem;
+    transition: all 0.3s ease; position: relative; overflow: hidden;
+  }
+  .who-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--gradient-tan); opacity: 0; transition: opacity 0.3s;
+  }
+  .who-card:hover { border-color: var(--border-accent); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .who-card:hover::before { opacity: 1; }
+  .who-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+  .who-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cream); }
+  .who-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; }
+
+  /* ── HOW ── */
+  .how-section { padding: 7rem 2rem; background: var(--green-deep); border-top: 1px solid var(--border); }
+  .steps-grid { display: grid; gap: 0; margin-top: 3rem; }
+  .step-row {
+    display: grid; grid-template-columns: 80px 1fr; gap: 2rem;
+    align-items: start; padding: 2rem 0;
+    border-bottom: 1px solid var(--border); transition: all 0.3s ease;
+  }
+  .step-row:last-child { border-bottom: none; }
+  .step-row:hover { padding-left: 0.5rem; }
+  .step-num {
+    font-family: var(--font-display); font-size: 2.4rem; font-weight: 700;
+    color: var(--tan); opacity: 0.6; line-height: 1; padding-top: 0.2rem;
+    transition: opacity 0.3s;
+  }
+  .step-row:hover .step-num { opacity: 1; }
+  .step-body h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--cream); }
+  .step-body p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+
+  /* ── BENEFITS ── */
+  .benefits-section { padding: 7rem 2rem; background: var(--green-dark); border-top: 1px solid var(--border); }
+  .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .benefit-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2.2rem; transition: all 0.3s ease;
+  }
+  .benefit-card:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+  .benefit-card .benefit-icon {
+    width: 48px; height: 48px;
+    background: var(--tan-subtle); border: 1px solid var(--border-accent);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1.2rem;
+  }
+  .benefit-card h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--cream); }
+  .benefit-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; }
+
+  /* ── EARNINGS ── */
+  .earnings-section { padding: 7rem 2rem; background: var(--green-deep); border-top: 1px solid var(--border); }
+  .earnings-table-wrap { margin-top: 3rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+  .earnings-table { width: 100%; border-collapse: collapse; }
+  .earnings-table thead { background: linear-gradient(135deg, var(--green-mid), var(--green-rich)); }
+  .earnings-table th {
+    padding: 1.1rem 1.5rem; text-align: left;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
+  }
+  .earnings-table td { padding: 1.1rem 1.5rem; font-size: 1rem; border-bottom: 1px solid var(--border); color: var(--text-primary); }
+  .earnings-table tbody tr { background: var(--bg-card); transition: background 0.2s; }
+  .earnings-table tbody tr:nth-child(even) { background: rgba(242,237,224,0.02); }
+  .earnings-table tbody tr:hover { background: var(--tan-subtle); }
+  .earnings-table .commission { font-family: var(--font-display); font-weight: 700; color: var(--tan); font-size: 1.1rem; }
+
+  /* ── DOCUMENTS ── */
+  .docs-section { padding: 7rem 2rem; background: var(--green-dark); border-top: 1px solid var(--border); }
+  .docs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+  .doc-card {
+    background: var(--gradient-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.8rem;
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    transition: all 0.3s ease; text-decoration: none; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .doc-card::after {
+    content: '↓'; position: absolute; top: 1.5rem; right: 1.5rem;
+    font-size: 1.2rem; color: var(--text-muted); transition: all 0.3s; font-weight: 700;
+  }
+  .doc-card:hover {
+    border-color: var(--border-accent); transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    background: linear-gradient(145deg, rgba(197,165,90,0.06), rgba(242,237,224,0.03));
+  }
+  .doc-card:hover::after { color: var(--tan); transform: translateY(3px); }
+  .doc-num {
+    width: 46px; height: 46px; min-width: 46px;
+    background: var(--tan-subtle); border: 1px solid var(--border-accent);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--tan);
+  }
+  .doc-info h3 {
+    font-family: var(--font-display); font-size: 1.05rem; font-weight: 600;
+    color: var(--cream); margin-bottom: 0.3rem; padding-right: 2rem;
+  }
+  .doc-info p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+  .doc-badge {
+    display: inline-block; font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);
+    background: rgba(242,237,224,0.05); border: 1px solid var(--border);
+    border-radius: 4px; padding: 0.15rem 0.5rem; margin-top: 0.5rem;
+  }
+
+  /* ── FAQ ── */
+  .faq-section { padding: 7rem 2rem; background: var(--green-deep); border-top: 1px solid var(--border); }
+  .faq-list { max-width: 780px; margin: 3rem auto 0; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
+  .faq-q {
+    font-family: var(--font-display); font-size: 1.05rem; font-weight: 600;
+    color: var(--cream); cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    transition: color 0.2s; user-select: none;
+  }
+  .faq-q:hover { color: var(--tan); }
+  .faq-q .faq-toggle { font-size: 1.4rem; color: var(--tan); transition: transform 0.3s; flex-shrink: 0; }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-top: 1rem; }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 7rem 2rem;
+    background: linear-gradient(165deg, var(--green-mid) 0%, var(--green-deep) 100%);
+    border-top: 1px solid var(--border); text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(197,165,90,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-content { position: relative; z-index: 2; }
+  .cta-content .section-sub { max-width: 580px; margin: 0 auto 2.5rem; text-align: center; }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .cta-email { margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted); }
+  .cta-email a { color: var(--tan-light); text-decoration: none; font-weight: 500; }
+  .cta-email a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border); background: var(--green-deep); }
+  footer p { font-size: 0.8rem; color: var(--text-muted); }
+  footer a { color: var(--text-secondary); text-decoration: none; }
+  footer a:hover { color: var(--tan); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-content { grid-template-columns: 1fr; text-align: center; }
+    .hero-sub { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { max-width: 400px; margin: 0 auto; }
+    .nav-links { display: none; }
+    .who-grid, .benefits-grid, .docs-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 7rem 1rem 4rem; }
+    .hero-stats { grid-template-columns: 1fr; }
+    .stat-card:first-child { grid-column: auto; }
+    .step-row { grid-template-columns: 50px 1fr; gap: 1rem; }
+    .earnings-table th, .earnings-table td { padding: 0.8rem 1rem; font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Dirt<span>View</span></div>
+  <div class="nav-links">
+    <a href="#who">Who It's For</a>
+    <a href="#how">How It Works</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#earnings">Earnings</a>
+    <a href="#resources">Resources</a>
+    <a href="#apply" class="nav-cta">Apply Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">Now Accepting Ambassadors</div>
+      <h1>You Know the Industry.<br>We Built the <em>Technology.</em></h1>
+      <p class="hero-sub">Join the DirtView Ambassador Program. Earn 10% commission for every contractor you introduce to the future of construction operations. No quotas. No sales pitches. Just introductions.</p>
+      <div class="hero-actions">
+        <a href="#apply" class="btn-primary">Apply to Become an Ambassador →</a>
+        <a href="#how" class="btn-secondary">See How It Works</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-number">10%</div>
+        <div class="stat-label">Commission on every contract</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$0</div>
+        <div class="stat-label">Minimum contract size</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">No cap on earnings</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IS THIS FOR -->
+<section class="who-section" id="who">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">Who It's For</span>
+      <h2 class="section-title">Built for People the Industry Trusts</h2>
+      <p class="section-sub">The DirtView Ambassador Program is for experienced construction professionals with strong networks and real relationships with decision-makers.</p>
+    </div>
+    <div class="who-grid">
+      <div class="who-card fade-in">
+        <span class="who-icon">📋</span>
+        <h3>Project Engineers &amp; PMs</h3>
+        <p>You see the inefficiencies every day. You know who's ready for something better and which companies are still drowning in paper.</p>
+      </div>
+      <div class="who-card fade-in">
+        <span class="who-icon">🏗️</span>
+        <h3>Foremen &amp; Superintendents</h3>
+        <p>You're in the field. You know what tools actually get used and what gets ignored. Your word carries weight.</p>
+      </div>
+      <div class="who-card fade-in">
+        <span class="who-icon">📐</span>
+        <h3>Estimators &amp; Precon Leads</h3>
+        <p>You're connected to every contractor in the bid process. You see more companies in a week than most people see in a year.</p>
+      </div>
+      <div class="who-card fade-in">
+        <span class="who-icon">⚙️</span>
+        <h3>Operations &amp; Safety Managers</h3>
+        <p>You understand what it takes to run a job right and which systems fall short. You know where the gaps are.</p>
+      </div>
+      <div class="who-card fade-in">
+        <span class="who-icon">💼</span>
+        <h3>Former Execs &amp; Consultants</h3>
+        <p>You've been in leadership. Your network runs deep. You know who makes buying decisions and how to reach them.</p>
+      </div>
+      <div class="who-card fade-in">
+        <span class="who-icon">🎓</span>
+        <h3>Industry Educators &amp; Influencers</h3>
+        <p>You train, teach, or advise construction teams. When you recommend something, people listen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">How It Works</span>
+      <h2 class="section-title">Five Steps. Two Minutes. Real Money.</h2>
+      <p class="section-sub">You make the introduction. We handle everything else — outreach, demos, proposals, and closing. You get paid when the deal closes.</p>
+    </div>
+    <div class="steps-grid fade-in">
+      <div class="step-row">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Talk to the DirtView Team</h3>
+          <p>Reach out or respond to our invitation. We'll have a quick conversation to learn about your background, your network, and make sure the program is a good fit for both sides.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Sign the Ambassador Agreement &amp; Get Your Resources</h3>
+          <p>Easy, industry-friendly contract so we can work together. Then you get your referral link, product overview, and ready-to-send message templates.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Submit a Referral</h3>
+          <p>When someone in your network could benefit from DirtView, fill out our simple online form with the contact's name, company, role, and any context. Takes about two minutes.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>DirtView Takes Over</h3>
+          <p>We reach out, run the sales process, and keep you updated at every stage — contacted, demo scheduled, proposal sent, closed.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h3>Get Paid</h3>
+          <p>Client signs and pays → you earn 10% of the total contract value. Paid within 30 days via ACH or check. That simple.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits-section" id="benefits">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">Why Join</span>
+      <h2 class="section-title">More Than a Referral Program</h2>
+      <p class="section-sub">This is an exclusive partnership with real upside — for your wallet and your industry influence.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">💰</div>
+        <h3>10% Commission, No Cap</h3>
+        <p>Earn 10% of the total contract value for every client you introduce. No ceiling, no tiers, no fine print.</p>
+      </div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🚀</div>
+        <h3>Early Access</h3>
+        <p>Get first access to new features, beta releases, and product roadmap updates before anyone else in the industry.</p>
+      </div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🔧</div>
+        <h3>Shape the Product</h3>
+        <p>Your feedback directly influences what we build. This isn't lip service — ambassadors have a direct line to our product team.</p>
+      </div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🤝</div>
+        <h3>Exclusive Network</h3>
+        <p>Join a hand-picked community of respected construction professionals who are pushing the industry forward.</p>
+      </div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">⭐</div>
+        <h3>Recognition</h3>
+        <p>Top ambassadors are featured in DirtView's marketing, case studies, and industry events. Your reputation grows with ours.</p>
+      </div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">📈</div>
+        <h3>Long-Term Upside</h3>
+        <p>Early ambassadors can grow into advisory roles, partnership positions, and deeper collaboration as DirtView scales.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EARNINGS -->
+<section class="earnings-section" id="earnings">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">What You Can Earn</span>
+      <h2 class="section-title">One Introduction. Real Commission.</h2>
+      <p class="section-sub">No quotas. No minimum contracts. You earn on every deal — from a small crew to a multinational operation.</p>
+    </div>
+    <div class="earnings-table-wrap fade-in">
+      <table class="earnings-table">
+        <thead>
+          <tr>
+            <th>Example</th>
+            <th>Contract Value</th>
+            <th>Your Commission</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Small concrete contractor</td>
+            <td>$2,000 / year</td>
+            <td class="commission">$200</td>
+          </tr>
+          <tr>
+            <td>Specialty subcontractor</td>
+            <td>$10,000 / year</td>
+            <td class="commission">$1,000</td>
+          </tr>
+          <tr>
+            <td>Mid-size general contractor</td>
+            <td>$100,000 / year</td>
+            <td class="commission">$10,000</td>
+          </tr>
+          <tr>
+            <td>Large regional GC</td>
+            <td>$500,000 / year</td>
+            <td class="commission">$50,000</td>
+          </tr>
+          <tr>
+            <td>Multinational GC</td>
+            <td>$3,000,000 / year</td>
+            <td class="commission">$300,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:1.5rem; font-size:0.9rem; color:var(--text-muted); max-width:700px;" class="fade-in">
+      Contract values vary by company size, modules selected, and number of users. These are examples only. Plus — if your referred client renews the following year, you earn an additional 10% on that first renewal.
+    </p>
+  </div>
+</section>
+
+<!-- DOCUMENTS -->
+<section class="docs-section" id="resources">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">Ambassador Resources</span>
+      <h2 class="section-title">Everything You Need. One Place.</h2>
+      <p class="section-sub">Download the full Ambassador Program packet below. These are the same documents you'll receive when you're accepted into the program.</p>
+    </div>
+    <div class="docs-grid">
+      <a class="doc-card fade-in" href="01_DirtView_Ambassador_Program_Overview.pdf" download>
+        <div class="doc-num">01</div>
+        <div class="doc-info">
+          <h3>Program Overview</h3>
+          <p>The complete overview — purpose, benefits, commission structure, and long-term opportunity.</p>
+          <span class="doc-badge">.pdf</span>
+        </div>
+      </a>
+      <a class="doc-card fade-in" href="02_DirtView_Ambassador_Role_and_Responsibilities.pdf" download>
+        <div class="doc-num">02</div>
+        <div class="doc-info">
+          <h3>Role &amp; Responsibilities</h3>
+          <p>What you do, what DirtView handles, and what's explicitly not your job.</p>
+          <span class="doc-badge">.pdf</span>
+        </div>
+      </a>
+      <a class="doc-card fade-in" href="03_DirtView_Commission_Structure.pdf" download>
+        <div class="doc-num">03</div>
+        <div class="doc-info">
+          <h3>Commission Structure</h3>
+          <p>Full terms, tracking process, payout timeline, and detailed earnings examples.</p>
+          <span class="doc-badge">.pdf</span>
+        </div>
+      </a>
+      <a class="doc-card fade-in" href="04_DirtView_Ambassador_Agreement.pdf" download>
+        <div class="doc-num">04</div>
+        <div class="doc-info">
+          <h3>Ambassador Agreement</h3>
+          <p>The legal contract — independent contractor terms, commissions, confidentiality, and protections.</p>
+          <span class="doc-badge">.pdf — Legal</span>
+        </div>
+      </a>
+      <a class="doc-card fade-in" href="05_DirtView_Onboarding_Guide.pdf" download>
+        <div class="doc-num">05</div>
+        <div class="doc-info">
+          <h3>Onboarding Guide</h3>
+          <p>Step-by-step walkthrough from acceptance to submitting your first referral.</p>
+          <span class="doc-badge">.pdf</span>
+        </div>
+      </a>
+      <a class="doc-card fade-in" href="06_DirtView_Referral_Process.pdf" download>
+        <div class="doc-num">06</div>
+        <div class="doc-info">
+          <h3>Referral Submission Process</h3>
+          <p>How to submit referrals, status tracking stages, form template, and FAQ.</p>
+          <span class="doc-badge">.pdf</span>
+        </div>
+      </a>
+      <a class="doc-card fade-in" href="07_DirtView_Communication_Templates.pdf" download>
+        <div class="doc-num">07</div>
+        <div class="doc-info">
+          <h3>Communication Templates</h3>
+          <p>Ready-to-send text, email, LinkedIn, and in-person scripts for introducing DirtView.</p>
+          <span class="doc-badge">.pdf</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="fade-in" style="text-align:center;">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Common Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span>Do I need sales experience?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">No. You're not selling anything. You're making introductions to people you already know. DirtView handles all demos, proposals, and closing.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span>Is there a minimum number of referrals?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">No. Refer one company a year or ten a month — it's entirely up to you. There are no quotas or minimum activity requirements.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span>How long does it take to get paid?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">Commission is paid within 30 calendar days of the client's payment to DirtView. You'll receive a commission statement with each payout.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span>Can I refer my own company?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">Self-referrals are not eligible for commission. The program is designed for introducing DirtView to other companies in your network.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span>Is this program open to anyone?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">Applications are reviewed individually. We're looking for experienced professionals with genuine industry relationships — not mass enrollment.</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          <span>What if I'm not sure someone is a good fit?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">Submit the referral anyway. We'll evaluate fit on our end and let you know within 5 business days. There's no penalty for submitting a referral that doesn't convert.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="apply">
+  <div class="container cta-content fade-in">
+    <span class="section-label">Join the Program</span>
+    <h2 class="section-title">Ready to Earn While You<br>Build the Future of Construction?</h2>
+    <p class="section-sub">The DirtView Ambassador Program is invitation-based, but we're always looking for the right people. If you've got the relationships and the reputation, we want to hear from you.</p>
+    <div class="cta-actions">
+      <a href="mailto:ambassadors@dirtview.com?subject=Ambassador%20Program%20Application" class="btn-primary">Apply Now →</a>
+      <a href="#resources" class="btn-secondary">Download Resources</a>
+    </div>
+    <p class="cta-email">Questions? Reach out at <a href="mailto:ambassadors@dirtview.com">ambassadors@dirtview.com</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>DirtView Inc.</strong> &nbsp;·&nbsp; The Future of Construction Is Here &nbsp;·&nbsp; <a href="https://dirtview.com">dirtview.com</a></p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
