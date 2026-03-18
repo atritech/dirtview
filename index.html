@@ -526,9 +526,47 @@ footer { background: var(--dark); padding: 60px 64px 40px; }
 .d4 { transition-delay: .4s; }
 .d5 { transition-delay: .5s; }
 
+/* ── MOBILE NAV ── */
+.nav-burger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 6px; border-radius: 6px;
+  transition: background .15s;
+}
+.nav-burger:hover { background: var(--tan-pale); }
+.nav-burger span {
+  display: block; width: 22px; height: 2px; background: var(--dark);
+  border-radius: 2px; transition: transform .25s, opacity .25s;
+}
+nav.open .nav-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+nav.open .nav-burger span:nth-child(2) { opacity: 0; }
+nav.open .nav-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-mobile-menu {
+  display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 99;
+  background: rgba(248,246,242,0.98); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(197,165,90,.2);
+  flex-direction: column; padding: 16px 24px 24px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.08);
+}
+nav.open ~ .nav-mobile-menu { display: flex; }
+.nav-mobile-links { display: flex; flex-direction: column; gap: 2px; margin-bottom: 16px; }
+.nav-mobile-links a {
+  font-size: 16px; color: var(--text); text-decoration: none;
+  padding: 12px 10px; border-radius: 8px; transition: background .15s;
+  border-bottom: 1px solid rgba(197,165,90,.12);
+}
+.nav-mobile-links a:last-child { border-bottom: none; }
+.nav-mobile-links a:hover { background: var(--tan-pale); }
+.nav-mobile-actions { display: flex; gap: 10px; }
+.nav-mobile-actions .btn-ghost,
+.nav-mobile-actions .btn-primary { flex: 1; text-align: center; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
   nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-right { display: none; }
+  .nav-burger { display: flex; }
   section { padding: 80px 24px; }
   .hero { padding: 100px 24px 60px; }
   .hero-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -546,6 +584,19 @@ footer { background: var(--dark); padding: 60px 64px 40px; }
   .footer-top { grid-template-columns: 1fr 1fr; }
   .cta-section { padding: 80px 24px; }
   footer { padding: 60px 24px 40px; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 44px; }
+  .hero-sub { font-size: 16px; }
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn-lg, .hero-ctas .btn-outline { text-align: center; justify-content: center; }
+  .hero-stats { flex-direction: column; gap: 20px; padding-top: 28px; margin-top: 36px; }
+  .stat-val { font-size: 26px; }
+  .sb-num { font-size: 36px; }
+  .modules-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
 }
 </style>
 </head>
@@ -572,7 +623,22 @@ footer { background: var(--dark); padding: 60px 64px 40px; }
     <a href="#" class="btn-ghost">Login</a>
     <a href="#contact" class="btn-primary">Book demo</a>
   </div>
+  <button class="nav-burger" aria-label="Open menu" onclick="this.closest('nav').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-mobile-menu">
+  <div class="nav-mobile-links">
+    <a href="#problem" onclick="document.querySelector('nav').classList.remove('open')">Problem</a>
+    <a href="#solution" onclick="document.querySelector('nav').classList.remove('open')">Solution</a>
+    <a href="#modules" onclick="document.querySelector('nav').classList.remove('open')">Modules</a>
+    <a href="#pricing" onclick="document.querySelector('nav').classList.remove('open')">Pricing</a>
+  </div>
+  <div class="nav-mobile-actions">
+    <a href="#" class="btn-ghost">Login</a>
+    <a href="#contact" class="btn-primary" onclick="document.querySelector('nav').classList.remove('open')">Book demo</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
